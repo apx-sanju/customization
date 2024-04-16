@@ -2,9 +2,10 @@
 {% load static %}
 {% block 'main' %}
 
+<!-- Showcase Section -->
 <section class="showcase-area" id="showcase" style="background-image: url('/static/images/bg/bg-2.jpg');">
     <div class="showcase-container">
-        <h1 class="main-title" id="home">Custmize by Yourself</h1>
+        <h1 class="main-title" id="home">Customize by Yourself</h1>
         <p>Service our Product Your</p>
         <a href="#food-menu" class="btn btn-primary" id="productbtn">
             <h4 id="BoldProduct">Products</h4>
@@ -12,26 +13,22 @@
     </div>
 </section>
 
-{% for x in prod %}
+<!-- Product Cards -->
+{% for product in products %}
 <div class="card">
-    <img src="{{x.pimage.url}}" alt="food" />
+    <img src="{{ product.image.url }}" alt="product" />
     <div class="card-body">
-        <h5 class="card-title">{{x.name}}</h5>
-        <p class="card-text">{{x.pdetails}}</p>
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.details }}</p>
         <p class="original-price">Original Price: ₹120</p>
         <p class="discount">Discount: 20%</p>
-        <p class="new-price">New Price: ₹{{x.price}}</p>
-        <button href="#"class="button-59" role="button">Add To Cart</button>
-        
-
-
-       
-        
+        <p class="new-price">New Price: ₹{{ product.price }}</p>
+        <button href="#" class="add-to-cart-btn" role="button">Add To Cart</button>
     </div>
-
 </div>
 {% endfor %}
 
+<!-- About Section -->
 <section id="about">
     <div class="about-wrapper container">
         <div class="about-text">
@@ -45,7 +42,7 @@
             <a href="/register"> <button type="register" class="btn btn-primary">Start Creating</button> </a>
         </div>
         <div class="about-img">
-            <img src="/static/images/bg/bg-customize.avif" alt="food" />
+            <img src="{% static 'images/bg/bg-customize.avif' %}" alt="customization" />
         </div>
     </div>
 </section>

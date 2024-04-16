@@ -3,39 +3,42 @@
 <html lang="en">
 
 <head>
+  <!-- Meta tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customization.com</title>
 
-  <!--FAV ICON LINKS HERE -->
+  <!-- Favicon links -->
+  <!-- Add favicon links here -->
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
   <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}">
   <link rel="mask-icon" href="{% static 'images/favicons/safari-pinned-tab.svg' %}" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+  <!-- End of Favicon links -->
 
-  <!--ICON LINKS END -->
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  <!-- Bootstrap CSS -->
+  <!-- Use either Bootstrap 4 or Bootstrap 5, not both -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <!--this is for login page fonts and icons-->
+  <!-- Font Awesome CSS -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-
-    
-  <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/logincss.css'%}">
 </head>
 
 <body>
 
+  <!-- Navbar -->
   <nav class="navbar">
+    <!-- Logo -->
     <img src="{% static 'images/logo1.png' %}" alt="Logo" class="logo">
+    <!-- Website Title -->
     <h3 class="label">Customization.com</h3>
+    <!-- Navigation Links -->
     <ul class="nav">
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/index">Home</a>
@@ -44,43 +47,153 @@
         <a class="nav-link" href="#">Contact Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">services</a>
+        <a class="nav-link" href="#">Services</a>
       </li>
-
-      
-
-      <li class="nav-item">
-        <a class="nav-link" href="/sign-in">Register</a>
-      </li>
-    
-    </ul>
-    {% if user.is_authenticated %}
-    <div class="dropdown">
- 
-      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"id="button-59">
-        
-          {% for x in data1 %}
-
-              {{ x.name }}
-
-          {% endfor %}
-
-      </button>
-    
-     
-    
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="/profile">Profile</a></li>
-        <li><a class="dropdown-item" href="/logout">Logout</a></li>
-      </ul>
-    </div>
-    {% endif %}
-
-    
-
-</nav>
-    
-      
-
     </ul>
   </nav>
+
+  <!-- Error and Success Messages -->
+  {% if errmsg %}
+  <div class="alert alert-danger" role="alert">
+    {{ errmsg }}
+  </div>
+  {% endif %}
+
+  {% if success %}
+  <div class="alert alert-success" role="alert">
+    {{ success }}
+  </div>
+  {% endif %}
+
+  <!-- Sign-in and Sign-up Forms -->
+  <div class="container">
+    <div class="signin-signup">
+      <!-- Sign-in Form -->
+      <form method="POST" action="{% url 'sign_in' %}" class="sign-in-form">
+        <!-- CSRF Token -->
+        {% csrf_token %}
+        <h2 class="title">Sign in</h2>
+        <!-- Email Input Field -->
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input type="email" placeholder="Email" name="username">
+        </div>
+        <!-- Password Input Field -->
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" name="userpassword">
+        </div>
+        <!-- Submit Button -->
+        <input type="submit" value="Login" class="btn">
+        <!-- Social Media Links -->
+        <p class="social-text">Or Sign in with social platform</p>
+        <div class="social-media">
+          <!-- Social Icons -->
+        </div>
+        <!-- Link to Sign-up -->
+        <p class="account-text">Don't have an account? <a href="#" id="sign-up-btn2">Sign up</a></p>
+      </form>
+
+      <!-- Sign-up Form -->
+      <form method="POST" action="{% url 'sign_up' %}" class="sign-up-form">
+        <!-- CSRF Token -->
+        {% csrf_token %}
+        <h2 class="title">Sign up</h2>
+        <!-- Username Input Field -->
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input type="text" id="Input1" name="name" placeholder="Username">
+        </div>
+        <!-- Email Input Field -->
+        <div class="input-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="Input2" name="username" placeholder="Email">
+        </div>
+        <!-- Send OTP Button -->
+        <button type="button" onclick="sendOTP()">Send OTP</button>
+        <!-- New Password Input Field -->
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="Input3" name="user_password" placeholder="New Password">
+        </div>
+        <!-- Confirm Password Input Field -->
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="Input4" name="user_confirm_password" placeholder="Confirm Password">
+        </div>
+        <!-- OTP Input Field -->
+        <div class="input-field">
+          <i class="fas fa-key"></i>
+          <input type="text" id="otpInput" name="otp" maxlength="6" pattern="\d{6}" placeholder="OTP" required>
+        </div>
+        <!-- Submit Button -->
+        <input type="submit" value="Sign up" class="btn">
+        <!-- Social Media Links -->
+        <p class="social-text">Or Sign in with social platform</p>
+        <div class="social-media">
+          <!-- Social Icons -->
+        </div>
+        <!-- Link to Sign-in -->
+        <p class="account-text">Already have an account? <a href="#" id="sign-in-btn2">Sign in</a></p>
+      </form>
+    </div>
+
+    <!-- Panels Container -->
+    <div class="panels-container">
+      <!-- Left Panel -->
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>Already Member ?</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt
+            minima iure?</p>
+          <button class="btn" id="sign-in-btn">Sign in</button>
+        </div>
+      </div>
+      <!-- Right Panel -->
+      <div class="panel right-panel">
+        <div class="content">
+          <h3>New to Here?</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt
+            minima iure?</p>
+          <button class="btn" id="sign-up-btn">Sign up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-index">
+    <footer class="footer_area py-5">
+      <!-- Footer Content -->
+      <div class="row">
+        <!-- About Section -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <!-- Footer Logo -->
+          <div class="single-footer-widget py-4">
+            <div class="footer-logo mb-3"></div>
+            <p class="mb-4">Customization.com is a website that allows you to customize anything you can...
+            </p>
+            <!-- Footer Social Area -->
+            <div class="footer_social_area">
+              <!-- Social Icons -->
+            </div>
+          </div>
+        </div>
+        <!-- Other Sections -->
+        <!-- Add other sections as needed -->
+      </div>
+    </footer>
+  </div>
+
+</body>
+
+<!-- JavaScript File -->
+<script src="{% static 'js/apps.js' %}"></script>
+
+<!-- Bootstrap and jQuery CDNs -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</html>
